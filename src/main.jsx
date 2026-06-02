@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowUpRight, BadgeCheck, Brush, Building2, ChevronRight, Gem, Layers3, Megaphone, MessageCircle, Sparkles, Target, Wand2 } from 'lucide-react';
+import { ArrowUpRight, BadgeCheck, Brush, Building2, Check, ChevronRight, Gem, Layers3, Megaphone, MessageCircle, Sparkles, Star } from 'lucide-react';
 import './styles.css';
 
 const img = (name) => `/assets/images/${name}`;
@@ -37,7 +37,7 @@ function Header() {
   return <header className="nav">
     <a className="brand" href="#top"><img src={img('libetech-logo.png')} alt="Libetech USA logo"/><span>LIBETECH USA</span></a>
     <nav>
-      <a href="#work">Work</a><a href="#systems">Systems</a><a href="#services">Services</a><a href="#contact">Contact</a>
+      <a href="#work">Work</a><a href="#systems">Systems</a><a href="#services">Services</a><a href="#pricing">Pricing</a><a href="#contact">Contact</a>
     </nav>
     <a className="navCta" href="https://wa.me/10000000000" target="_blank">WhatsApp <ArrowUpRight size={16}/></a>
   </header>
@@ -111,6 +111,27 @@ function Services(){
  </section>
 }
 
+function Pricing(){
+ const plans=[
+  {name:'Starter Brand',price:'$149',tag:'Launch package',desc:'Perfect for new businesses that need a professional first impression.',features:['3 premium logo concepts','2 revision rounds','Main logo + light/dark versions','Transparent PNG + JPG','Vector SVG/PDF delivery','Ready for social media'],cta:'Start Starter'},
+  {name:'Business Identity',price:'$349',tag:'Most Popular',featured:true,desc:'A stronger identity system for businesses that want to look established.',features:['5 premium logo concepts','Professional brand moodboard','Color palette + typography system','Profile image + Facebook cover','Basic brand guide','Final files for print and digital'],cta:'Start Business'},
+  {name:'Premium Brand System',price:'$699',tag:'Best Value',desc:'Complete visual transformation for brands that need authority and trust.',features:['Full creative direction','Premium brand system','Business card + letterhead','2 professional advertising flyers','Premium mockup presentation','Complete visual identity guide'],cta:'Start Premium'}
+ ];
+ return <section id="pricing" className="section pricing">
+  <div className="sectionHead narrow"><span>Investment</span><h2>Premium packages built to increase perceived value.</h2><p>Choose the right level for your business. Every package is designed to make Hispanic-owned businesses in the United States look more professional, trustworthy and ready to grow.</p></div>
+  <div className="pricingGrid">{plans.map((plan,i)=><motion.article key={plan.name} initial={{opacity:0,y:30}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{duration:.55,delay:i*.08}} className={`priceCard ${plan.featured?'featured':''}`}>
+    <div className="priceTop">
+      <div><span className="priceTag">{plan.featured?<Star size={13} fill="currentColor"/>:null}{plan.tag}</span><h3>{plan.name}</h3></div>
+      <div className="price">{plan.price}<small>USD</small></div>
+    </div>
+    <p>{plan.desc}</p>
+    <ul>{plan.features.map(f=><li key={f}><Check size={17}/><span>{f}</span></li>)}</ul>
+    <a className="priceCta" href={`https://wa.me/10000000000?text=${encodeURIComponent('Hi Libetech USA, I want information about the '+plan.name+' package.')}`} target="_blank">{plan.cta}<ArrowUpRight size={16}/></a>
+  </motion.article>)}</div>
+  <div className="pricingNote"><BadgeCheck size={18}/><span>Recommended first test for USA market: publish Starter at $149 and use Business Identity as the main sales anchor.</span></div>
+ </section>
+}
+
 function Process(){
  return <section className="section process">
   <div className="processPanel">
@@ -131,6 +152,6 @@ function Contact(){
  </section>
 }
 
-function App(){return <><Header/><Hero/><MarqueeLogos/><Work/><Systems/><Services/><Process/><Contact/><footer>© {new Date().getFullYear()} LIBETECH USA — Premium Branding Studio</footer></>}
+function App(){return <><Header/><Hero/><MarqueeLogos/><Work/><Systems/><Services/><Pricing/><Process/><Contact/><footer>© {new Date().getFullYear()} LIBETECH USA — Premium Branding Studio</footer></>}
 
 createRoot(document.getElementById('root')).render(<App/>);
